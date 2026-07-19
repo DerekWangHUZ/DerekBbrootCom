@@ -17,7 +17,7 @@
     --text-secondary: #98989d;
     --text-tertiary: #86868b;
     --border: rgba(255,255,255,.12);
-    --input-bg: rgba(0,0,0,.25);
+    --input-bg: #2a2a2c;
     --shadow-sm: 0 1px 3px rgba(0,0,0,.3);
     --shadow-md: 0 4px 14px rgba(0,0,0,.35);
     --shadow-lg: 0 8px 30px rgba(0,0,0,.4);
@@ -50,23 +50,14 @@
     background: url('./background.jpg') center / cover no-repeat;
     overflow: visible;
   }
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0,.1) 0%, rgba(0,0,0,.4) 100%);
-    z-index: 1;
-  }
-  /* 底部渐变过渡到深色背景 */
+  /* 底部内阴影过渡到深色背景 */
   .hero::after {
     content: '';
     position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 140px;
-    background: linear-gradient(to bottom, transparent 0%, var(--bg) 100%);
-    z-index: 2;
+    inset: 0;
+    box-shadow: inset 0 -90px 50px -20px var(--bg);
+    pointer-events: none;
+    z-index: 1;
   }
   .hero-content {
     position: absolute;
@@ -346,14 +337,21 @@
 
   /* Verification area */
   .contact-verify {
-    display: none;
-    padding: 16px 20px 20px;
+    display: flex;
     flex-direction: column;
     gap: 14px;
-    border-top: 1px solid var(--frost-border);
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0 20px;
+    border-top: none;
+    transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease, padding 0.3s ease, border-top 0.3s ease;
   }
   .contact-card.expanded .contact-verify {
-    display: flex;
+    max-height: 300px;
+    opacity: 1;
+    padding: 16px 20px 20px;
+    border-top: 1px solid var(--frost-border);
   }
   }
   .verify-field {
@@ -372,7 +370,7 @@
     font-size: 15px;
     font-family: inherit;
     color: var(--text-primary);
-    border: 1px solid var(--glass-border);
+    border: 1px solid var(--frost-border);
     border-radius: 10px;
     outline: none;
     transition: border-color .2s ease, box-shadow .2s ease;
