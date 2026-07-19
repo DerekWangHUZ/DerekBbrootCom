@@ -12,18 +12,21 @@
     --accent: #0071e3;
     --accent-hover: #0077ed;
     --bg: #1d1d1f;
-    --card-bg: #2c2c2e;
+    --card-bg: rgba(255,255,255,.06);
     --text-primary: #f5f5f7;
     --text-secondary: #98989d;
     --text-tertiary: #86868b;
-    --border: #424245;
-    --input-bg: #1c1c1e;
+    --border: rgba(255,255,255,.12);
+    --input-bg: rgba(0,0,0,.25);
     --shadow-sm: 0 1px 3px rgba(0,0,0,.3);
     --shadow-md: 0 4px 14px rgba(0,0,0,.35);
     --shadow-lg: 0 8px 30px rgba(0,0,0,.4);
     --radius-sm: 12px;
     --radius-md: 16px;
     --radius-lg: 20px;
+    /* Frosted glass tokens */
+    --frost-bg: rgba(255,255,255,.08);
+    --frost-border: rgba(255,255,255,.12);
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -134,30 +137,51 @@
     gap: 12px;
   }
 
-  /* ---------- Link Card ---------- */
+  /* ---------- Link Card (Frosted Glass) ---------- */
   .link-card {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 16px;
-    background: var(--card-bg);
+    background: var(--frost-bg);
     border-radius: var(--radius-md);
     padding: 18px 20px;
-    box-shadow: var(--shadow-sm);
     cursor: pointer;
     text-decoration: none;
     color: inherit;
-    transition: all .2s ease;
-    border: 1px solid transparent;
+    transition: transform .35s cubic-bezier(.25,.46,.45,.94), box-shadow .35s ease, border-color .35s ease;
+    border: 1px solid var(--frost-border);
     -webkit-tap-highlight-color: transparent;
     user-select: none;
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+    overflow: hidden;
+  }
+  /* Mouse-tracking highlight */
+  .link-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at var(--mx, 50%) var(--my, 30%), rgba(255,255,255,.15) 0%, transparent 60%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .35s ease;
   }
   .link-card:hover {
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-1px);
-    border-color: var(--border);
+    transform: scale(1.03) translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,.3), 0 0 0 1px rgba(255,255,255,.08);
+    border-color: rgba(255,255,255,.2);
+    background: rgba(255,255,255,.12);
+  }
+  .link-card:hover::after {
+    opacity: 1;
   }
   .link-card:active {
-    transform: scale(.99);
+    transform: scale(.98);
     transition: transform .1s ease;
   }
   .link-card .card-icon {
@@ -206,14 +230,40 @@
     height: 16px;
   }
 
-  /* ---------- Expandable Contact Card ---------- */
+  /* ---------- Expandable Contact Card (Frosted Glass) ---------- */
   .contact-card {
-    background: var(--card-bg);
+    position: relative;
+    background: var(--frost-bg);
     border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    border: 1px solid transparent;
-    transition: all .2s ease;
+    border: 1px solid var(--frost-border);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+    transition: transform .35s cubic-bezier(.25,.46,.45,.94), box-shadow .35s ease, border-color .35s ease;
     overflow: hidden;
+  }
+  /* Mouse-tracking highlight */
+  .contact-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at var(--mx, 50%) var(--my, 30%), rgba(255,255,255,.15) 0%, transparent 60%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .35s ease;
+    z-index: 1;
+  }
+  .contact-card:hover {
+    transform: scale(1.03) translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,.3), 0 0 0 1px rgba(255,255,255,.08);
+    border-color: rgba(255,255,255,.2);
+    background: rgba(255,255,255,.12);
+  }
+  .contact-card:hover::after {
+    opacity: 1;
   }
   .contact-card-header {
     display: flex;
@@ -278,7 +328,7 @@
     padding: 16px 20px 20px;
     flex-direction: column;
     gap: 14px;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--frost-border);
     animation: fadeSlideIn .3s ease;
   }
   .contact-card.expanded .contact-verify {
@@ -304,16 +354,18 @@
     font-size: 15px;
     font-family: inherit;
     color: var(--text-primary);
-    border: 1px solid var(--border);
+    border: 1px solid var(--glass-border);
     border-radius: 10px;
     outline: none;
     transition: border-color .2s ease, box-shadow .2s ease;
     background: var(--input-bg);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
   }
   .verify-field input:focus {
     border-color: var(--accent);
     box-shadow: 0 0 0 3px rgba(0,113,227,.25);
-    background: #1c1c1e;
+    background: var(--input-bg);
   }
   .verify-btn {
     align-self: flex-start;
@@ -348,7 +400,7 @@
     padding: 16px 20px 20px;
     flex-direction: column;
     gap: 14px;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--glass-border);
     animation: fadeSlideIn .3s ease;
   }
   .contact-detail.visible {
@@ -359,8 +411,11 @@
     align-items: center;
     gap: 12px;
     padding: 12px 16px;
-    background: #242426;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.08);
     border-radius: 12px;
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
   }
   .contact-detail-item .detail-icon {
     width: 36px;
@@ -634,7 +689,23 @@
   [nameInput, cityInput].forEach(el =>
     el.addEventListener('keydown', e => { if (e.key === 'Enter') verifyBtn.click(); })
   );
-})();
+})();</script>
+
+<script>
+// Mouse-tracking highlight on cards
+document.querySelectorAll('.link-card, .contact-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
+    const y = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
+    card.style.setProperty('--mx', x + '%');
+    card.style.setProperty('--my', y + '%');
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.setProperty('--mx', '50%');
+    card.style.setProperty('--my', '30%');
+  });
+});
 </script>
 
 </body>
