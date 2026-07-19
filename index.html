@@ -67,7 +67,7 @@
   .hero-content {
     position: absolute;
     left: 50%;
-    bottom: 60px;
+    bottom: 0;
     transform: translateX(-50%);
     z-index: 3;
     display: flex;
@@ -75,11 +75,11 @@
     gap: 24px;
   }
   .avatar {
-    width: 120px;
-    height: 120px;
-    border-radius: 18px;
-    object-fit: cover;
-    box-shadow: 0 4px 24px rgba(0,0,0,.35);
+    width: 150px;
+    height: 150px;
+    border-radius: 0;
+    object-fit: contain;
+    box-shadow: none;
     flex-shrink: 0;
   }
   .hero-greeting {
@@ -275,7 +275,7 @@
   /* Verification area */
   .contact-verify {
     display: none;
-    padding: 0 20px 20px;
+    padding: 16px 20px 20px;
     flex-direction: column;
     gap: 14px;
     border-top: 1px solid var(--border);
@@ -345,7 +345,7 @@
   /* Contact detail */
   .contact-detail {
     display: none;
-    padding: 0 20px 20px;
+    padding: 16px 20px 20px;
     flex-direction: column;
     gap: 14px;
     border-top: 1px solid var(--border);
@@ -405,8 +405,8 @@
   /* Responsive */
   @media (max-width: 520px) {
     .hero { height: 300px; }
-    .hero-content { gap: 14px; bottom: 50px; }
-    .avatar { width: 85px; height: 85px; border-radius: 14px; }
+    .hero-content { gap: 14px; bottom: 0; }
+    .avatar { width: 100px; height: 100px; }
     .hero-greeting { font-size: 17px; }
     .signature-text { font-size: 30px; letter-spacing: 2px; }
     .link-card, .contact-card-header { padding: 14px 16px; gap: 12px; }
@@ -524,12 +524,12 @@
 
     <div class="contact-verify" id="verifySection">
       <div class="verify-field">
-        <label for="nameInput">我的简体中文姓名是什么？请填写。</label>
-        <input type="text" id="nameInput" placeholder="请输入姓名" autocomplete="off">
+        <label for="nameInput">壹次心的姓名是什么？请回答。</label>
+        <input type="text" id="nameInput" placeholder="请输入简体中文姓名。" autocomplete="off">
       </div>
       <div class="verify-field">
-        <label for="cityInput">我的家或学校所在的地级行政区或直辖市的中文名是什么？请完整填写其中任意一个（xx市/xx自治州/xx地区/xx盟）。</label>
-        <input type="text" id="cityInput" placeholder="例如：成都市" autocomplete="off">
+        <label for="cityInput">壹次心的家或学校所在的地级行政区或直辖市是什么？请回答其中任意一个。</label>
+        <input type="text" id="cityInput" placeholder="请输入完整简体中文行政区名（xx市/xx自治州/xx地区/xx盟）。" autocomplete="off">
       </div>
       <span class="verify-error" id="verifyError">答案不正确，请再试一次。</span>
       <button class="verify-btn" id="verifyBtn">验证</button>
@@ -625,7 +625,7 @@
       let msg;
       if (!nOk && !cOk) msg = '两个答案都不正确，请再试一次。';
       else if (!nOk) msg = '姓名不正确，请再试一次。';
-      else msg = '地点不正确，请再试一次。';
+      else msg = '地名不正确，请再试一次。';
       verifyError.textContent = msg;
       verifyError.style.display = 'block';
     }
