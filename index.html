@@ -39,36 +39,47 @@
   .hero {
     position: relative;
     width: 100%;
-    height: 320px;
-    background: url('./个人资料背景.jpg') center / cover no-repeat;
+    height: 340px;
+    background: url('./background.jpg') center / cover no-repeat;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    overflow: visible;
   }
-  .hero::after {
+  /* 顶部暗化遮罩 */
+  .hero::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0,.15) 0%, rgba(0,0,0,.45) 100%);
+    background: linear-gradient(to bottom, rgba(0,0,0,.1) 0%, rgba(0,0,0,.35) 100%);
+    z-index: 1;
+  }
+  /* 底部渐变过渡，消除边界突兀感 */
+  .hero::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent 0%, var(--bg) 100%);
+    z-index: 2;
   }
   .hero-content {
     position: relative;
-    z-index: 1;
+    z-index: 3;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 20px;
   }
   .avatar {
-    width: 96px;
-    height: 96px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     border: 3px solid rgba(255,255,255,.85);
     object-fit: cover;
     box-shadow: 0 4px 20px rgba(0,0,0,.25);
-    background: #fff;
+    flex-shrink: 0;
   }
   .hero-greeting {
     font-size: 22px;
@@ -76,6 +87,7 @@
     color: #fff;
     text-shadow: 0 1px 8px rgba(0,0,0,.35);
     letter-spacing: .5px;
+    white-space: nowrap;
   }
   .hero-greeting .name-highlight {
     color: #5eabff;
@@ -85,51 +97,40 @@
   /* ---------- Signature ---------- */
   .signature-section {
     max-width: 680px;
-    margin: -28px auto 0;
+    margin: -18px auto 0;
     padding: 0 20px;
     position: relative;
-    z-index: 2;
-  }
-  .signature-card {
-    background: var(--card-bg);
-    border-radius: var(--radius-lg);
-    padding: 28px 32px;
-    box-shadow: var(--shadow-md);
-    text-align: center;
+    z-index: 4;
   }
   .signature-text {
-    font-size: 26px;
+    display: block;
+    font-size: 28px;
     font-weight: 700;
-    background: linear-gradient(135deg, #0071e3 0%, #5eabff 30%, #0071e3 60%, #40a9ff 100%);
-    background-size: 200% auto;
+    text-align: center;
+    line-height: 1.6;
+    letter-spacing: 2px;
+    /* 多层渐变 + 立体阴影塑造艺术字效果 */
+    background: linear-gradient(135deg, #0071e3 0%, #5ea8ff 25%, #0071e3 50%, #40a0ff 75%, #0071e3 100%);
+    background-size: 300% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: shimmer 3s ease-in-out infinite;
-    letter-spacing: 2px;
-    line-height: 1.6;
+    animation: shimmer 4s ease-in-out infinite;
+    filter: drop-shadow(0 2px 4px rgba(0,113,227,.25));
   }
   @keyframes shimmer {
     0%, 100% { background-position: 0% center; }
-    50% { background-position: 200% center; }
+    50% { background-position: 100% center; }
   }
 
   /* ---------- Main Container ---------- */
   .main-container {
     max-width: 680px;
-    margin: 24px auto 60px;
+    margin: 28px auto 60px;
     padding: 0 20px;
     display: flex;
     flex-direction: column;
     gap: 14px;
-  }
-  .section-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 8px 4px 0;
   }
 
   /* ---------- Link Card ---------- */
@@ -401,10 +402,11 @@
 
   /* Responsive */
   @media (max-width: 520px) {
-    .hero { height: 240px; }
-    .avatar { width: 76px; height: 76px; }
-    .hero-greeting { font-size: 18px; }
-    .signature-text { font-size: 21px; }
+    .hero { height: 260px; }
+    .hero-content { gap: 14px; }
+    .avatar { width: 68px; height: 68px; }
+    .hero-greeting { font-size: 17px; }
+    .signature-text { font-size: 22px; }
     .link-card, .contact-card-header { padding: 14px 16px; gap: 12px; }
     .link-card .card-icon, .contact-card .card-icon { width: 38px; height: 38px; border-radius: 10px; }
     .link-card .card-icon svg, .contact-card .card-icon svg { width: 24px; height: 24px; }
@@ -418,7 +420,7 @@
 <!-- ==================== Hero ==================== -->
 <div class="hero">
   <div class="hero-content">
-    <img class="avatar" src="./壹次心.png" alt="壹次心" loading="eager">
+    <img class="avatar" src="./derek.png" alt="壹次心" loading="eager">
     <div class="hero-greeting">
       欢迎访问<span class="name-highlight">壹次心</span>的小窝ヾ(≧▽≦*)o
     </div>
@@ -427,9 +429,7 @@
 
 <!-- ==================== Signature ==================== -->
 <div class="signature-section">
-  <div class="signature-card">
-    <span class="signature-text">但愿天空 不再涂上灰的脸</span>
-  </div>
+  <span class="signature-text">但愿天空 不再涂上灰的脸</span>
 </div>
 
 <!-- ==================== Main ==================== -->
@@ -534,7 +534,7 @@
       <button class="verify-btn" id="verifyBtn">验证</button>
     </div>
 
-    <!-- 联系方式详情 (验证通过后显示) -->
+    <!-- 联系方式详情 -->
     <div class="contact-detail" id="contactDetail">
       <div class="contact-detail-item">
         <div class="detail-icon" style="background:#0071e315;">
@@ -572,7 +572,6 @@
 
 <script>
 (async () => {
-  /* ─── SHA-256 via Web Crypto ─── */
   async function sha256(text) {
     const encoder = new TextEncoder();
     const data = encoder.encode(text.trim());
@@ -581,14 +580,13 @@
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
   }
 
-  /* ─── Pre-computed answer hashes ─── */
-  const NAME_HASH   = 'fb46096da0d93dc38795e687d4d63738a84706625aab5dc8aae5b654361cd8ad';
+  /* Pre-computed hashes: 王子懿 / 惠州市 / 成都市 */
+  const NAME_HASH   = '3dfd74bd3f7b942ebc2aeb1471c0ae02eeba1d00a377403fa907e8f8e18187c4';
   const CITY_HASHES = [
-    '18910c0427ac05321ae1fcd950640906179bfd6e28882e6d7cbeb322ebeb3f2d', // 北京市
-    '2e9414cac2cae506653d9fdfa49fc00d0acc96bbef41424be480f6cde353ac82'  // 上海市
+    '8b88b79c28a67c5c6c1d71705817f6cf4b256a1bfbcf43ba4b01fbc2934187b1',
+    '1cfc7499b50727c424d8d96d768472a7ca1f766d675168eb573bf695397ecea0'
   ];
 
-  /* ─── DOM ─── */
   const contactCard   = document.getElementById('contactCard');
   const contactHeader = document.getElementById('contactHeader');
   const verifySection = document.getElementById('verifySection');
@@ -599,18 +597,13 @@
   const cityInput     = document.getElementById('cityInput');
 
   let isExpanded = false;
-  let isVerified = false;
 
-  /* Toggle expand */
   contactHeader.addEventListener('click', () => {
     isExpanded = !isExpanded;
     contactCard.classList.toggle('expanded', isExpanded);
-    if (!isExpanded) {
-      verifyError.style.display = 'none';
-    }
+    if (!isExpanded) verifyError.style.display = 'none';
   });
 
-  /* Verify */
   verifyBtn.addEventListener('click', async () => {
     verifyError.style.display = 'none';
     const nameVal = nameInput.value.trim();
@@ -624,29 +617,24 @@
 
     const [nameHash, cityHash] = await Promise.all([sha256(nameVal), sha256(cityVal)]);
 
-    const nameOk = nameHash === NAME_HASH;
-    const cityOk = CITY_HASHES.includes(cityHash);
-
-    if (nameOk && cityOk) {
-      isVerified = true;
+    if (nameHash === NAME_HASH && CITY_HASHES.includes(cityHash)) {
       verifySection.style.display = 'none';
       contactDetail.classList.add('visible');
     } else {
-      let msg = '';
-      if (!nameOk && !cityOk) msg = '两个答案都不正确，请再试一次。';
-      else if (!nameOk) msg = '姓名不正确，请再试一次。';
+      let msg;
+      const nOk = nameHash === NAME_HASH;
+      const cOk = CITY_HASHES.includes(cityHash);
+      if (!nOk && !cOk) msg = '两个答案都不正确，请再试一次。';
+      else if (!nOk) msg = '姓名不正确，请再试一次。';
       else msg = '地点不正确，请再试一次。';
       verifyError.textContent = msg;
       verifyError.style.display = 'block';
     }
   });
 
-  /* Enter key support */
-  [nameInput, cityInput].forEach(el => {
-    el.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') verifyBtn.click();
-    });
-  });
+  [nameInput, cityInput].forEach(el =>
+    el.addEventListener('keydown', e => { if (e.key === 'Enter') verifyBtn.click(); })
+  );
 })();
 </script>
 
