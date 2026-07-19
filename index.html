@@ -24,6 +24,7 @@
     --radius-sm: 12px;
     --radius-md: 16px;
     --radius-lg: 20px;
+    --radius-card: 40px;
     /* Frosted glass tokens */
     --frost-bg: rgba(255,255,255,.08);
     --frost-border: rgba(255,255,255,.12);
@@ -144,7 +145,7 @@
     align-items: center;
     gap: 16px;
     background: var(--frost-bg);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-card);
     padding: 18px 20px;
     cursor: pointer;
     text-decoration: none;
@@ -157,6 +158,21 @@
     backdrop-filter: blur(20px);
     box-shadow: 0 2px 8px rgba(0,0,0,.15);
     overflow: hidden;
+  transform-origin: top center;
+  }
+  /* Top & bottom light seep-in */
+  .link-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      radial-gradient(ellipse 70% 15% at 50% 0%, rgba(255,255,255,.07) 0%, transparent 100%),
+      radial-gradient(ellipse 70% 15% at 50% 100%, rgba(255,255,255,.05) 0%, transparent 100%);
+    pointer-events: none;
+    border-radius: inherit;
   }
   /* Mouse-tracking highlight */
   .link-card::after {
@@ -166,13 +182,13 @@
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(ellipse at var(--mx, 50%) var(--my, 30%), rgba(255,255,255,.15) 0%, transparent 60%);
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 30%), rgba(255,255,255,.15) 0%, transparent 60%);
     pointer-events: none;
     opacity: 0;
     transition: opacity .35s ease;
   }
   .link-card:hover {
-    transform: scale(1.03) translateY(-2px);
+    transform: scale(1.03);
     box-shadow: 0 8px 32px rgba(0,0,0,.3), 0 0 0 1px rgba(255,255,255,.08);
     border-color: rgba(255,255,255,.2);
     background: rgba(255,255,255,.12);
@@ -233,14 +249,18 @@
   /* ---------- Expandable Contact Card (Frosted Glass) ---------- */
   .contact-card {
     position: relative;
-    background: var(--frost-bg);
-    border-radius: var(--radius-md);
+    background:
+      radial-gradient(ellipse 70% 15% at 50% 0%, rgba(255,255,255,.07) 0%, transparent 100%),
+      radial-gradient(ellipse 70% 15% at 50% 100%, rgba(255,255,255,.05) 0%, transparent 100%),
+      var(--frost-bg);
+    border-radius: var(--radius-card);
     border: 1px solid var(--frost-border);
     -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     box-shadow: 0 2px 8px rgba(0,0,0,.15);
     transition: transform .35s cubic-bezier(.25,.46,.45,.94), box-shadow .35s ease, border-color .35s ease;
     overflow: hidden;
+    transform-origin: top center;
   }
   /* Mouse-tracking highlight */
   .contact-card::after {
@@ -250,17 +270,19 @@
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(ellipse at var(--mx, 50%) var(--my, 30%), rgba(255,255,255,.15) 0%, transparent 60%);
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 30%), rgba(255,255,255,.15) 0%, transparent 60%);
     pointer-events: none;
     opacity: 0;
     transition: opacity .35s ease;
-    z-index: 1;
   }
   .contact-card:hover {
-    transform: scale(1.03) translateY(-2px);
+    transform: scale(1.03);
     box-shadow: 0 8px 32px rgba(0,0,0,.3), 0 0 0 1px rgba(255,255,255,.08);
     border-color: rgba(255,255,255,.2);
-    background: rgba(255,255,255,.12);
+    background:
+      radial-gradient(ellipse 70% 15% at 50% 0%, rgba(255,255,255,.07) 0%, transparent 100%),
+      radial-gradient(ellipse 70% 15% at 50% 100%, rgba(255,255,255,.05) 0%, transparent 100%),
+      rgba(255,255,255,.12);
   }
   .contact-card:hover::after {
     opacity: 1;
@@ -329,14 +351,10 @@
     flex-direction: column;
     gap: 14px;
     border-top: 1px solid var(--frost-border);
-    animation: fadeSlideIn .3s ease;
   }
   .contact-card.expanded .contact-verify {
     display: flex;
   }
-  @keyframes fadeSlideIn {
-    from { opacity: 0; transform: translateY(-8px); }
-    to { opacity: 1; transform: translateY(0); }
   }
   .verify-field {
     display: flex;
