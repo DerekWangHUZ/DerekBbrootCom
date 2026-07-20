@@ -732,16 +732,15 @@
 
   contactHeader.addEventListener('click', () => {
     if (isVerified) {
-      // 已验证状态：点击收起联系方式详情（带动画）
+      // 已验证状态：同时触发 detail 收起 + verify 展开，卡片高度连续过渡
       isVerified = false;
+      isExpanded = true;
+      // 先将 verifySection 从 display:none 恢复入布局（max-height 基态为 0）
+      verifySection.style.display = '';
+      void verifySection.offsetHeight;
+      // 同时移除 visible（detail: 500→0）和添加 expanded（verify: 0→300）
       contactDetail.classList.remove('visible');
-      // detail 收起动画完成后，重置状态以便下次展开
-      setTimeout(() => {
-        if (!isVerified) {
-          contactCard.classList.remove('expanded');
-          isExpanded = false;
-        }
-      }, TRANS_DUR);
+      contactCard.classList.add('expanded');
       return;
     }
     isExpanded = !isExpanded;
@@ -773,11 +772,12 @@
 
     if (nameHash === NAME_HASH && CITY_HASHES.includes(cityHash)) {
       isVerified = true;
-      // 先收起验证表单（带动画），动画结束后再展开联系方式详情
+      // 同时触发 verify 收起 + detail 展开，卡片高度连续过渡
       contactCard.classList.remove('expanded');
+      contactDetail.classList.add('visible');
+      // 过渡完成后清理 verifySection，使其不再占据布局
       setTimeout(() => {
         verifySection.style.display = 'none';
-        contactDetail.classList.add('visible');
       }, TRANS_DUR);
     } else {
       const nOk = nameHash === NAME_HASH;
